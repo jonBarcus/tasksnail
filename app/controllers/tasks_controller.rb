@@ -24,7 +24,17 @@ class TasksController < ApplicationController
   # POST /tasks
   # POST /tasks.json
   def create
+
+    #See step 5 if this isn't working correctly
+    @user = current_user
     @task = Task.new(task_params)
+
+    if @user.soft_user?
+      @task.soft_token = @user.soft_token
+    end
+
+    @task.save
+    respond_with(@task)
 
     respond_to do |format|
       if @task.save

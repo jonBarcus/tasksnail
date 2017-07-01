@@ -5,4 +5,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :tasks, dependent: :destroy
+
+  def soft_user?
+    self.email.empty?
+  end
+
 end
